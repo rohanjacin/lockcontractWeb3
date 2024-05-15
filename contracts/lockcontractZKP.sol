@@ -198,25 +198,24 @@ contract LockZKP {
 
 	// Owner's response to authenication
 	function responseAuth (/*GuestProof memory _proof, */address _guest,
-						   LockNonce memory _nonce/*,  uint[2] calldata _proof0,
+						   LockNonce memory _nonce,  uint[2] calldata _proof0,
 						   uint[2][2] calldata _proof1, uint[2] calldata _proof2,
-							uint[16] calldata  _publicSignals*/)
+							uint[16] calldata  _publicSignals)
 		public onlyOwner onlyAfterOwnerRegistered {
 		// Validate owner's proof here
 
-/*		bool result = IGroth16Verifier(ownerverifier).verifyProof(
+		bool result = IGroth16Verifier(ownerverifier).verifyProof(
 			_proof0, _proof1, _proof2, _publicSignals);
 		//bool result = true;
 		console.log("Proof verifier(owner):", result);
 		//require(result);
-*/
+
 		// If valid owner forward the nonce (challenge) to lock
 		GuestSession memory gCtx;
 		gCtx = guestSessions[_guest];
 		console.log("In responseAuth");
 		gCtx.ownernonce = _nonce; 						 
 		console.log("Responding to Auth from guest");
-		bool result = true;
 		emit RespondAuth (owner, _guest, gCtx, result);
 	}
 
